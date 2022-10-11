@@ -1,0 +1,53 @@
+required:
+  version: str
+  title: str
+  description: str
+  date: date
+
+  #Author of usecases(who created this usecase)
+  author: str
+
+  #Status of the alert (Draft, Testing, Enabled, Disabled)
+  status: str
+
+  #supporting References for alert (website where we can find some info, github links)
+  references: str 
+
+  logSource:
+    vendor: str
+    product: str
+    category: str
+
+  splunk_idex:
+    index: str
+    sourcetype: str
+
+  detection:
+    SPL_Query: str
+    condition: 
+      frequency: str
+      suppression : str
+      fields_suppressed: str
+    #List out all the important fields present in the alert with explaination.
+    fields: str
+
+  known_false_positives: str
+
+  investigation_Links:
+    playbook_link: str
+    guru_card: str
+    github: str
+  
+
+  #Alert Severity (High, Medium, low)
+  #priority: str
+
+  tags:
+     mitre_attack_id: str
+     mitre_attack_link: str
+     mitre_attack_tactic: str
+     mitre_attack_technique: str
+
+optional:
+  priority: str
+  

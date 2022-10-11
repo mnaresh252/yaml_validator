@@ -1,0 +1,56 @@
+version: 1.0.0
+title: Title of Alert.
+description: Description of the usecase.
+date: 2022-09-20
+
+#Author of usecases(who created this usecase)
+author: example@gmail.com
+
+#Status of the alert (Draft, Testing, Enabled, Disabled)
+status: draft
+
+#supporting References for alert (website where we can find some info, github links)
+references:
+    https://unit42.paloaltonetworks.com/chromeloader-malware/
+    https://www.bleepingcomputer.com/news/security/vmware-microsoft-warn-of-widespread-chromeloader-malware-attacks/
+    https://twitter.com/MsftSecIntel/status/1570911625841983489
+    https://blogs.vmware.com/security/2022/09/the-evolution-of-the-chromeloader-malware.html
+
+logSource:
+  vendor: Cloudflare
+  product: DNS
+  category: registry_add
+
+splunk_idex:
+  index: name of Index
+  sourcetype: sourcetype
+
+detection:
+  SPL_Query: eventtype=okta_log displayMessage="Max sign in attempts exceeded" | rename
+    client.geographicalContext.country as country, client.geographicalContext.state
+   as state, client.geographicalContext.city as city | table _time, user, country,
+    state, city, src_ip |`okta_user_lockouts_filter`
+  condition: 
+    frequency: Alert Runs every 20 min and checks back 24 hours.
+    suppression : Alert is supressed for 24 hours.
+    fields_suppressed: Scr_Ip is suppressed
+  #List out all the important fields present in the alert with explaination.
+  fields:
+       EventType- Explains what event type means.
+       TargetObject
+
+investigation_Links:
+  playbook_link: unknown
+  guru_card: unknown
+  github: unknown
+
+known_false_positives: unknown
+
+#Alert Severity (High, Medium, low)
+priority: medium
+
+tags:
+   mitre_attack_id: T1110
+   mitre_attack_link: https://attack.mitre.org/techniques/T1110/
+   mitre_attack_tactic: Credential Access
+   mitre_attack_technique: Bruteforce
